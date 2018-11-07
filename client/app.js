@@ -1,13 +1,12 @@
 import React from 'react'
-
-import {Navbar} from './components'
+import { Switch, Route } from 'react-router-dom'
+import GameBoard from './components/GameBoard'
 import Routes from './routes'
 
 const App = () => {
   return (
     <div>
-      <Navbar />
-      <Routes />
+      <Route path ='/' component={GameBoard}/>
     </div>
   )
 }
