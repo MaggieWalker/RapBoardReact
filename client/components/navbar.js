@@ -1,10 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import ScoreBoard from './ScoreBoard'
 
 const Navbar = () => (
   <div>
-    <h1 id='header'>RapBoard React</h1>
+    <h1 id='header'>The AdLibrary Of Babel</h1>
     <nav>
       {/* {isLoggedIn ? (
         <div>
@@ -29,10 +28,3 @@ const Navbar = () => (
 
 export default Navbar
 
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}

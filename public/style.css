@@ -6,23 +6,64 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background:	#B2BF34
+  background: #BCBDCF
+}
+
+#playButton {
+  display: flex;
+  justify-content: center;
 }
 
 #rappers {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
-
+  text-align: center;
+  justify-content: center;
 }
-
+.microphone {
+  height: 200px;
+  width: auto;
+  animation: none;
+}
 #header {
   text-align: center
 }
-
+#correctScreen {
+  display: flex;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  flex-shrink: inherit;
+}
 a {
   text-decoration: none;
+}
+
+button {
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background: #00727D;
+  margin: 9px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: white;   
+  padding: 15px 25px;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom-color: rgba(0,0,0,0.34);
+  text-shadow:0 1px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                      0 2px 0 -1px rgba(0,0,0,0.13), 
+                      0 3px 0 -1px rgba(0,0,0,0.08), 
+                      0 3px 13px -1px rgba(0,0,0,0.21);
+}
+
+button:active {
+  top: 2px;
+    border-color: rgba(0,0,0,0.34) rgba(0,0,0,0.21) rgba(0,0,0,0.21);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.89),0 1px rgba(0,0,0,0.05) inset;
+    position: relative;  
 }
 
 label {
@@ -39,7 +80,7 @@ form div {
   display: inline-block;
 }
 
-img:hover {
+figure>img:hover {
   animation: shake 0.5s;
   animation-iteration-count: infinite;
 }
@@ -57,3 +98,11 @@ img:hover {
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+/* colors {
+  purple: #6D4488
+  darkBlue: #00727D
+  green: #2CB567
+  yellowgree: #B2BF34
+  lightviolet: #BCBDCF
+} */
