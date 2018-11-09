@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './navbar'
 import CorrectScreen from './CorrectScreen'
 import rappers from '../rappers'
+import io from 'socket.io-client'
 
 class GameBoard extends React.Component{
   constructor() {
@@ -15,8 +16,17 @@ class GameBoard extends React.Component{
       this.state = {
         correct: null,
         rapperChoice: {},
-        score: 0
+        playerOne: {
+          score: 0,
+          id: ''
+        },
+        playerTwo: {
+          score: 0,
+          id: ''
+        }
       }
+      this.socket = io(window.location.origin)
+
   }
   
   componentDidMount(){
@@ -24,6 +34,20 @@ class GameBoard extends React.Component{
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
     });
+
+    this.socket.on('connect', () => {
+      console.log('Connected!')
+    })
+    //Listening for server emits
+    this.socket.on('emitScore', (score) => {
+      console.log('An event from serve has been received!', score)
+      console.log('this', this)
+      this.setState({
+        playerOne: {
+          score: score
+        }
+      })
+    })
   }
 
   chooseRappers() {
@@ -50,19 +74,28 @@ class GameBoard extends React.Component{
   }
 
   handleRapperClick(event) {
-    console.log('event', event.target)
+    console.log('event.target', event.target)
+    let points = this.state.playerOne.score
     if(event.target.id === this.state.rapperChoice.name) {
-      this.setState({
-        correct: true
-      })
-      this.setState({
-        score: this.state.score + 1
-      })
+      points++
+      this.socket.emit('sendScore', points)
+      this.correctGuess(points)
     } else {
       this.setState({
         correct: false
       })
     }
+  }
+  
+correctGuess(){
+    this.setState({
+      correct: true
+    })
+    this.setState({
+      playerOne:{
+        score: this.state.playerOne.score + 1
+      } 
+    })
   }
 
   handlePlayAgain() {
@@ -81,7 +114,8 @@ class GameBoard extends React.Component{
     <div>
       <div>
          <Navbar />
-         <h2>Score: {this.state.score}</h2>
+         <h2>Player One Score: {this.state.playerOne.score}</h2>
+         <h2>Player Two Score: {}</h2>
       </div>
 <div id='rappers'>
       {
