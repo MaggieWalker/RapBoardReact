@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const Navbar = () => (
   <div>
     <h1 id='header'>The AdLibrary Of Babel</h1>
