@@ -1,4 +1,5 @@
 import React from 'react'
+import {correctChoice} from '../rappers'
 
 
 const CorrectScreen = (props) => {
@@ -6,7 +7,7 @@ const CorrectScreen = (props) => {
 
     return (
         <div id='correctScreen'>
-            <h1>That's Correct!</h1>
+            <h1>{correctChoice[Math.floor(Math.random() * correctChoice.length)]}</h1>
             <img id='rapperChoice' src={rapper.img} />
         </div>
 

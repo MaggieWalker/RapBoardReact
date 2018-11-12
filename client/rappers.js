@@ -492,7 +492,15 @@ const rappers = [
   {"name":"jeezy3","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_1.ogg","img":"http://therapboard.com/images/artist/jeezy.png"}
 ];
 
-export const incorrectChoices =[
+export const correctChoice = [
+  "That's correct!",
+  "Yeaaaaa boyyyy!",
+  "YUH",
+  "You got it!",
+  "mhm, you know it"
+]
+
+export const incorrectChoice =[
   "You crazy for this one!",
   "If you know you know...and you clearly don't",
   "That's wrong! You mad?",
@@ -500,5 +508,20 @@ export const incorrectChoices =[
   "That is...not correct.",
   "Ha haaaa! No way!"
 ];
+
+export const colors =['#6D4488',
+  '#00727D',
+  '#2CB567',
+  '#B2BF34',
+  '#BCBDCF',
+  '#C69A9B',
+  '#917B4E',
+  '#C14129'
+  // togglecolor: #2196F3
+  // toggleblue: #3096F3
+  // togglepink: #f33096
+  // toggleorange: #ff9933
+  // togglegreen: #30f38d
+]
   
   export default rappers

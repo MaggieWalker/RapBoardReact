@@ -40,16 +40,24 @@ handleOnSubmit() {
 render() {
     return (
     <div>
-        <br></br>
+        <br/>
         <div>
-            <h1>Whatchu Know About This!</h1>
-            <div className='button'>
-                <button type='button' id='createGame'onClick={this.handleCreate}>CREATE</button>
-                <button type='button' id='joinGame' onClick={() => history.push('/join')}>JOIN</button>
+            <h1 id='header'>🎵 Between Bars 🎵</h1>
+            <div id='subtitle'>
+                <h1>Think You Know Rap?</h1>
+                <div className='button'>
+                    {/* <button type='button' id='createGame'onClick={this.handleCreate}>CREATE</button> */}
+                    <button type='button' id='joinGame' onClick={() => history.push('/game')}>Start!</button>
+                </div>
+            </div>
+            <div id='pics'>
+            <img id='pic' src="https://media.giphy.com/media/l4FGBX2RxxywvlZ3a/source.gif" />
+            <img id='pic' src="https://media.giphy.com/media/xThtalXYy3xjQItuwM/giphy.gif" />
+            <img id='pic' src="https://media.giphy.com/media/fe3Rwmc2bBulG/giphy.gif" />
             </div>
         </div>
 
-        <div className='createGameWrapper'>
+        {/* <div className='createGameWrapper'>
             <div className="info">Open this site on your browser:</div>
             <div id="gameURL">
                 <span>http://localhost:8080/</span>
@@ -58,8 +66,7 @@ render() {
                 Then click <strong>JOIN</strong> and<br/>enter the following Game ID:
             </div>
             <div className="gameId">{this.state.gameId}</div>
-        
-        </div>
+        </div> */}
     </div>
         )
     }
