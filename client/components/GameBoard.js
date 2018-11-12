@@ -13,15 +13,18 @@ class GameBoard extends React.Component{
     this.incorrectChoice = incorrectChoice
       this.displayedRappers =[]
       this.audioChoice = ''
+      this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10/Sheck-Wes-Mo-Bamba-Instrumental-Prod.-By-Take-A-Daytrip-16yrold.mp3')
       this.handlePlayClick = this.handlePlayClick.bind(this)
       this.handleRapperClick = this.handleRapperClick.bind(this)
       this.handlePlayAgain = this.handlePlayAgain.bind(this)
+      this.onSoundClick = this.onSoundClick.bind(this)
       this.startGame = this.startGame.bind(this)
       this.state = {
         SFW: true,
         correct: null,
         rapperChoice: {},
         gameInfo: {},
+        audioPlay: false,
         addedPlayer: '',
         playerOne: {
           id: '',
@@ -81,6 +84,20 @@ class GameBoard extends React.Component{
   handlePlayClick() {
     this.audioChoice.play()
   }
+  onSoundClick(){
+    if(!this.state.audioPlay){
+      this.audio.play()
+      this.setState({
+          audioPlay: true
+      })
+  } else if (this.state.audioPlay){
+      this.audio.pause();
+      this.setState({
+          audioPlay: false
+      })
+  }
+  console.log(this.state)
+  }
 
   chooseAudio() {
     this.audioChoice = new Audio(this.state.rapperChoice.track)
@@ -109,6 +126,11 @@ correctGuess(){
     this.setState({
       playerOne: {score: this.state.playerOne.score + 1}
     })
+    let score = this.state.playerOne.score + 1
+    if (score % 5 === 0 && score !==0) {
+      const airHorn = new Audio("https://www.myinstants.com/media/sounds/mlg-airhorn.mp3")
+      airHorn.play()
+    } 
   }
 
   handlePlayAgain() {
@@ -167,6 +189,8 @@ correctGuess(){
   <div id='playButton'>
       <button type='button'onClick={this.handlePlayClick}>Play!</button>
   </div>
+  <button type ='button' onClick={this.onSoundClick}>🔊</button>
+  
   
   <p/>
   <p/>

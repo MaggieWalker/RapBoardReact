@@ -523,5 +523,11 @@ export const colors =['#6D4488',
   // toggleorange: #ff9933
   // togglegreen: #30f38d
 ]
+export const correctSounds =[
+  new Audio('http://www.therapboard.com/audio/treysongz_4.ogg'),
+  new Audio("https://www.myinstants.com/media/sounds/mlg-airhorn.mp3"),
+  new Audio('http://www.therapboard.com/audio/traviscott_yah.ogg'),
+  new Audio('http://www.therapboard.com/audio/yogotti_yeah.ogg')
+]
   
   export default rappers

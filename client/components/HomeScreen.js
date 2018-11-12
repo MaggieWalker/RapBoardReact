@@ -9,11 +9,14 @@ class HomeScreen extends React.Component{
     constructor(props) {
       super(props)
 this.handleOnSubmit = this.handleOnSubmit.bind(this)
+this.onClick = this.onClick.bind(this)
 this.handleCreate = this.handleCreate.bind(this)
 this.socket = io(window.location.origin)
+this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10/Sheck-Wes-Mo-Bamba-Instrumental-Prod.-By-Take-A-Daytrip-16yrold.mp3')
 this.state ={
     gameId: 'Click Create!',
-    playerOne: ''
+    playerOne: '',
+    audioPlay: false,
 }
     }
 
@@ -36,7 +39,20 @@ this.socket.on('connect', () => {
 handleOnSubmit() {
     console.log('joining!')
     }
-
+onClick(){
+    if(!this.state.audioPlay){
+        this.audio.play()
+        this.setState({
+            audioPlay: true
+        })
+    } else if (this.state.audioPlay){
+        this.audio.pause();
+        this.setState({
+            audioPlay: false
+        })
+    }
+    console.log(this.state)
+}
 render() {
     return (
     <div>
@@ -45,6 +61,7 @@ render() {
             <h1 id='header'>🎵 Between Bars 🎵</h1>
             <div id='subtitle'>
                 <h1>Think You Know Rap?</h1>
+                <button type ='button' onClick={this.onClick}>🔊</button>
                 <div className='button'>
                     {/* <button type='button' id='createGame'onClick={this.handleCreate}>CREATE</button> */}
                     <button type='button' id='joinGame' onClick={() => history.push('/game')}>Start!</button>
