@@ -22,12 +22,6 @@ socket.on('nextPlayer', (nextPlayer, cardIdx) => {
   store.dispatch(gotNextPlayer(nextPlayer, cardIdx))
 })
 
-socket.on('bothplayers', (playerOne, playerTwo) => {
-  console.log('player one in socket.js', playerOne, 'playerTwo in socket.js', playerTwo)
-  store.dispatch(gotPlayerOne(playerOne))
-  store.dispatch(gotPlayerTwo(playerTwo))
-})
-
 socket.on('all-players', (allPlayers) => {
   console.log('all players in socket', allPlayers)
   store.dispatch(getAllPlayers(allPlayers))

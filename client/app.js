@@ -6,7 +6,6 @@ import Routes from './routes'
 import HomeScreen from './components/HomeScreen'
 import JoinScreen from './components/JoinScreen';
 import CreateScreen from './components/CreateScreen';
-import Main from './components/Main'
 
 const App = () => {
   return (

@@ -31,18 +31,13 @@ class GameBoard extends React.Component{
   }
 
   componentDidMount(){
-    console.log('state in did mount', this.state)
-    console.log('all players', this.props.allPlayers)
+    console.log('all players in did mount', this.props.allPlayers)
     this.displayedRappers = this.chooseRappers()
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
 
     });
 
-    // this.socket.on('emitScore', (score) => {
-    //   console.log('An score from server has been received!', score)
-    //   console.log('this props', this.props)
-    // })
 
     this.socket.on('playerAdded', (id) => {
       console.log('A new player was added!', id)
@@ -137,9 +132,6 @@ correctGuess(){
   }
 
   render() {
-    console.log('state', this.state)
-    // console.log('player from store', this.props.playerOne)
-    console.log('player one', this.props.playerOne, 'and two', this.props.playerTwo)
     return (
     <div>
       <div>
@@ -196,7 +188,7 @@ correctGuess(){
             <div id='correctScreen'>
               <CorrectScreen rapper={this.state.rapperChoice}/> 
               {
-                setTimeout(this.handlePlayAgain, 2000)
+                setTimeout(this.handlePlayAgain, 1500)
               }
             </div>
           </div>

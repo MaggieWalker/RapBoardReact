@@ -9,25 +9,14 @@ class WaitRoom extends React.Component {
     constructor() {
         super()
         this.state = {
-            rounds: '',
+            rounds: 1,
             errMessage: ''
         }
-        this.handleChange = this.handleChange.bind(this)
         this.startGame = this.startGame.bind(this)
     }
 
-    handleChange(event) {
-        this.setState({
-            rounds: parseInt(event.target.value, 10)
-        })
-    }
-
     startGame() {
-        if (this.state.rounds > 0) {
-            socket.emit('startGame', this.props.room, this.props.allPlayers, this.state.rounds, this.props.playerOne, this.props.playerTwo)
-        } else {
-            this.setState({errMessage: 'Enter number of rounds to play before beginning'})
-        }
+        socket.emit('startGame', this.props.room, this.props.allPlayers, this.state.rounds, this.props.playerOne, this.props.playerTwo)
     }
 
     render() {
@@ -48,8 +37,8 @@ class WaitRoom extends React.Component {
                                 <hr />
                                 {this.props.allPlayers.map((player, i) => <p key={i}>{player.name} has joined the room!</p>)}
                                 <hr />
-                                <label>Rounds:</label>
-                                <input type="text" name="rounds" value={this.state.rounds} onChange={this.handleChange} />
+                                {/* <label>Rounds:</label>
+                                <input type="text" name="rounds" value={this.state.rounds} onChange={this.handleChange} /> */}
                                 <br />
                                 <button type="button" onClick={this.startGame}>All Players are Here!</button>
                                 {this.state.errMessage && <p id="errMessage">{this.state.errMessage}</p>}

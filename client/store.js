@@ -27,8 +27,6 @@ const initialState = {
 //action types
 const GOT_MY_PLAYER = 'GOT_MY_PLAYER'
 const GOT_NEW_PLAYER = 'GOT_NEW_PLAYER'
-const GOT_PLAYER_ONE = 'GOT_MY_PLAYER'
-const GOT_PLAYER_TWO = 'GOT_PLAYER_TWO'
 const GOT_ROOM = 'GOT_ROOM'
 const GOT_GAME_STATE = 'GOT_GAME_STATE'
 const GOT_NEXT_PLAYER = 'GOT_NEXT_PLAYER'
@@ -42,8 +40,6 @@ const GET_ALL_PLAYERS = 'GET_ALL_PLAYERS'
 //action creators
 export const gotNewPlayer = (player) => ({type: GOT_NEW_PLAYER, player})
 export const gotPlayer = (player) => ({type: GOT_MY_PLAYER, player})
-export const gotPlayerOne = (player) => ({type: GOT_PLAYER_ONE, player})
-export const gotPlayerTwo = (player) => ({type: GOT_PLAYER_TWO, player})
 export const gotRoom = (room) => ({type: GOT_ROOM, room})
 export const gotGameState = (gameState, allPlayers) => ({type: GOT_GAME_STATE, gameState, allPlayers})
 export const gotNextPlayer = (player, cardIdx) => ({type: GOT_NEXT_PLAYER, player, cardIdx})
@@ -71,10 +67,6 @@ const reducer = (state = initialState, action) => {
             return {...state, playerTwo: action.player.name, allPlayers: [...state.allPlayers, action.player]}
         case GOT_MY_PLAYER:
             return {...state, player: action.player, allPlayers: [...state.allPlayers, action.player]}
-        case GOT_PLAYER_ONE:
-            return {...state, playerOne: action.player.name, allPlayers: [...state.allPlayers, action.player]}
-        case GOT_PLAYER_TWO:
-            return {...state, playerTwo: action.player.name, allPlayers: [...state.allPlayers, action.player]}
         case GOT_ROOM:
             return {...state, room: action.room}
         case GOT_GAME_STATE:
