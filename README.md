@@ -2,8 +2,12 @@
 
 _A game for you and all of your friends!_
 
-Great! Love it! I'm having so much fun already!
-
 Hip Hop Is Bigger Than Religion
 
 ## Setup
+
+* npm install
+
+* npm run start-dev
+
+* App should run on http://localhost:8080/

@@ -2,9 +2,8 @@ import React, {Component} from 'react'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import GameBoard from './components/GameBoard'
 
-/**
- * COMPONENT
- */
+//I am not using these routes right now!
+
 class Routes extends Component {
   componentDidMount() {
   }
@@ -14,7 +13,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" />
+        <Route path="/login"/>
         <Route path="/signup"  />
         {/* Displays our Login component as a fallback */}
         <Route />

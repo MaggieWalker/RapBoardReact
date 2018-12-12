@@ -1,58 +1,75 @@
 import React from 'react'
-import JoinScreen from './JoinScreen';
-import CreateScreen from './CreateScreen'
-import { Switch, Route } from 'react-router-dom'
 import history from '../history'
+import socket from '../socket'
 import io from 'socket.io-client'
+import {connect} from 'react-redux'
 
 class HomeScreen extends React.Component{
     constructor(props) {
       super(props)
+      this.state ={
+        gameId: 'Click Create!',
+        name: '',
+        joinName: '',
+        id: '',
+        errMessage: null,
+        audioPlay: false,
+    }
 this.handleOnSubmit = this.handleOnSubmit.bind(this)
 this.onClick = this.onClick.bind(this)
-this.handleCreate = this.handleCreate.bind(this)
+this.handleChange = this.handleChange.bind(this)
+this.createRoom = this.createRoom.bind(this)
+this.joinRoom = this.joinRoom.bind(this)
 this.socket = io(window.location.origin)
 this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10/Sheck-Wes-Mo-Bamba-Instrumental-Prod.-By-Take-A-Daytrip-16yrold.mp3')
-this.state ={
-    gameId: 'Click Create!',
-    playerOne: '',
-    audioPlay: false,
-}
     }
 
-handleCreate() {
-    // Create a unique Socket.IO Room
-    var thisGameId = ( Math.random() * 100000 ) | 0;
-    this.setState({gameId: thisGameId, playerOne: this.socket.id})
-    // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
-    this.socket.emit('newGameCreated', {gameId: thisGameId, mySocketId: this.socket.id});
-    console.log('gameId', thisGameId, 'mySocketId', this.socket.id)
-    // Join the Room and wait for the players
-    // this.join(thisGameId.toString());
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
 
-this.socket.on('connect', () => {
-    console.log('Connected!')
-    console.log('Player was added with id:', this.socket.id)
-    let playerId = this.socket.id
-    })
-}
-handleOnSubmit() {
-    console.log('joining!')
+    createRoom() {
+        if (this.state.name !== '') {
+            socket.emit('create-room', this.state.name);
+            this.props.history.push('/game')
+        } else {
+            this.setState({errMessage: 'Please fill in name field to create a room'})
+        }
+        console.log('create room! Creator:', this.state.name)
     }
-onClick(){
-    if(!this.state.audioPlay){
-        this.audio.play()
-        this.setState({
-            audioPlay: true
-        })
-    } else if (this.state.audioPlay){
-        this.audio.pause();
-        this.setState({
-            audioPlay: false
-        })
+
+    joinRoom() {
+        if (this.state.joinName !== '' && this.state.id !== '') {
+            socket.emit('join-room', this.state.id, this.state.joinName)
+            console.log('props in joinRoom homescreen', this.props)
+            this.props.history.push('/game')
+        } else {
+            this.setState({errMessage: 'Please fill in name and room id to join a room'})
+        }
+        console.log('join room!', this.state.joinName)
     }
-    console.log(this.state)
-}
+
+    handleOnSubmit() {
+        console.log('joining!')
+        }
+
+    onClick(){
+        if(!this.state.audioPlay){
+            this.audio.play()
+            this.setState({
+                audioPlay: true
+            })
+        } else if (this.state.audioPlay){
+            this.audio.pause();
+            this.setState({
+                audioPlay: false
+            })
+        }
+        console.log(this.state)
+    }
+
 render() {
     return (
     <div>
@@ -60,12 +77,10 @@ render() {
         <div>
             <h1 id='header'>🎵 Between Bars 🎵</h1>
             <div id='subtitle'>
-                <h1>Think You Know Rap?</h1>
-                <button type ='button' onClick={this.onClick}>🔊</button>
-                <div className='button'>
-                    {/* <button type='button' id='createGame'onClick={this.handleCreate}>CREATE</button> */}
+                {/* <h1>Think You Know Rap?</h1> */}
+                {/* <div className='button'>
                     <button type='button' id='joinGame' onClick={() => history.push('/game')}>Start!</button>
-                </div>
+                </div> */}
             </div>
             <div id='pics'>
             <img id='pic' src="https://media.giphy.com/media/l4FGBX2RxxywvlZ3a/source.gif" />
@@ -74,18 +89,36 @@ render() {
             </div>
         </div>
 
-        {/* <div className='createGameWrapper'>
-            <div className="info">Open this site on your browser:</div>
-            <div id="gameURL">
-                <span>http://localhost:8080/</span>
+        <div id="welcome">
+                <h1>Start A New Game</h1>
+                <p>Please enter your name below</p>
+                <label>Name</label>
+                <input name="name" value={this.state.name} onChange={this.handleChange} type="text" />
+                <hr />
+                <p>If you would like to create a new room, click here!</p>
+                <button type="submit" onClick={this.createRoom}>Create A Game Room!</button>
+                <hr />
+                <p>If you would like to join an existing room, enter the room ID, and click here!</p>
+                <label>Name</label>
+                <input name="joinName" value={this.state.joinName} onChange={this.handleChange} type="text" /> <br />
+                <label>Room ID</label>
+                <input name="id" value={this.state.id} onChange={this.handleChange} type="text" /> <br />
+                <button type="submit" onClick={this.joinRoom}>Join A Game Room!</button>
+                <hr />
+                {this.state.errMessage && <p id="errMessage">{this.state.errMessage}</p>}
             </div>
-            <div className="info">
-                Then click <strong>JOIN</strong> and<br/>enter the following Game ID:
-            </div>
-            <div className="gameId">{this.state.gameId}</div>
-        </div> */}
     </div>
         )
     }
 }
-export default HomeScreen
+
+const mapStateToProps = state => {
+    return {
+        room: state.room,
+        gameState: state.gameState,
+        allPlayers: state.allPlayers,
+        playerOne: state.playerOne,
+        playerTwo: state.playerTwo
+    }
+}
+export default connect(mapStateToProps)(HomeScreen)

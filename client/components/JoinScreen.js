@@ -21,7 +21,7 @@ render() {
             <input type="text"></input>
             </label>
             <label>
-                Name:
+                Join with Name:
             <input type="text"></input>
             </label>
             <input type="submit" value="Submit" />

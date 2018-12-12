@@ -1,16 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router} from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { Router } from 'react-router-dom'
 import history from './history'
 import App from './app'
+import store from './store'
 
 // establishes socket connection
 import './socket'
 
 ReactDOM.render(
+  <Provider store={store}>
     <Router history={history}>
       <App />
-    </Router>,
+    </Router>
+  </Provider>,
   document.getElementById('app')
 )
 

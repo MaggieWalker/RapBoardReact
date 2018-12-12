@@ -1,13 +1,13 @@
 import React from 'react'
 import Navbar from './navbar'
 import CorrectScreen from './CorrectScreen'
-import rappers, {NSFW, SFW, incorrectChoice, colors} from '../rappers'
+import {NSFW, SFW, incorrectChoice, colors} from '../rappers'
 import io from 'socket.io-client'
+import {connect} from 'react-redux'
 
 class GameBoard extends React.Component{
   constructor() {
     super()
-    this.rappers = rappers
     this.SFW = SFW
     this.NSFW = NSFW
     this.incorrectChoice = incorrectChoice
@@ -26,30 +26,23 @@ class GameBoard extends React.Component{
         gameInfo: {},
         audioPlay: false,
         addedPlayer: '',
-        playerOne: {
-          id: '',
-          score: 0
-        },
-        playerTwo: {
-          id: '',
-          score: 0
-        }
       }
       this.socket = io(window.location.origin)
   }
-  
+
   componentDidMount(){
-    console.log('socket', this.socket.id)
     console.log('state in did mount', this.state)
+    console.log('all players', this.props.allPlayers)
     this.displayedRappers = this.chooseRappers()
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
+
     });
 
-    this.socket.on('emitScore', (score) => {
-      console.log('An event from serve has been received!', score)
-      console.log('this', this)
-    })
+    // this.socket.on('emitScore', (score) => {
+    //   console.log('An score from server has been received!', score)
+    //   console.log('this props', this.props)
+    // })
 
     this.socket.on('playerAdded', (id) => {
       console.log('A new player was added!', id)
@@ -106,11 +99,12 @@ class GameBoard extends React.Component{
   handleRapperClick(event) {
     console.log('event.target', event.target)
     let socket = this.socket.id
-      let points = this.state.playerOne.score
+      let points = this.props.playerOneScore
       if(event.target.id === this.state.rapperChoice.name) {
         points++
+        console.log('point sin handle click', points)
         this.socket.emit('sendScore', points)
-        this.correctGuess(points)
+        this.correctGuess()
       } else {
         this.setState({
           correct: false
@@ -123,10 +117,8 @@ correctGuess(){
     this.setState({
       correct: true
     })
-    this.setState({
-      playerOne: {score: this.state.playerOne.score + 1}
-    })
-    let score = this.state.playerOne.score + 1
+    let score = this.props.playerOneScore + 1
+    console.log('score in correct guss', score)
     if (score % 5 === 0 && score !==0) {
       const airHorn = new Audio("https://www.myinstants.com/media/sounds/mlg-airhorn.mp3")
       airHorn.play()
@@ -146,6 +138,8 @@ correctGuess(){
 
   render() {
     console.log('state', this.state)
+    // console.log('player from store', this.props.playerOne)
+    console.log('player one', this.props.playerOne, 'and two', this.props.playerTwo)
     return (
     <div>
       <div>
@@ -155,10 +149,10 @@ correctGuess(){
         </div>
          <div id='scores'>
         <div>
-            <h2>Player One Score: {this.state.playerOne.score}</h2>
+            <h2>{this.props.allPlayers[0].name}'s Score: {this.props.playerOneScore}</h2>
         </div>
         <div>
-            <h2>Player Two Score: {this.state.playerTwo.score}</h2>
+            <h2>{this.props.allPlayers[1].name}'s Score: {this.props.allPlayers[1].score}</h2>
         </div>
          </div>
       </div>
@@ -187,7 +181,7 @@ correctGuess(){
     </div>
   </div>
   <div id='playButton'>
-      <button type='button'onClick={this.handlePlayClick}>Play!</button>
+      <button type='button'onClick={this.handlePlayClick}>Play Ad Lib!</button>
   </div>
   <button type ='button' onClick={this.onSoundClick}>🔊</button>
   
@@ -201,7 +195,9 @@ correctGuess(){
           <div id='makeChoice'>
             <div id='correctScreen'>
               <CorrectScreen rapper={this.state.rapperChoice}/> 
-              <button type='button' id='playAgainButton' onClick={this.handlePlayAgain}>Next!</button>
+              {
+                setTimeout(this.handlePlayAgain, 2000)
+              }
             </div>
           </div>
       : 
@@ -217,7 +213,18 @@ correctGuess(){
   </div>
     )
   }
-
 }
-
-export default GameBoard
+const mapStateToProps = state => {
+  return {
+      playerOne: state.playerOne,
+      playerTwo: state.playerTwo,
+      playerOneScore: state.playerOneScore,
+      playerTwoScore: state.playerTwoScore,
+      curPlayer: state.curPlayer,
+      correctGuess: state.correctGuess,
+      room: state.room,
+      gameState: state.gameState,
+      allPlayers: state.allPlayers,
+  }
+}
+export default connect(mapStateToProps)(GameBoard)
