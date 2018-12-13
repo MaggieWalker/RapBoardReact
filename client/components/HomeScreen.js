@@ -32,7 +32,7 @@ this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10
 
     createRoom() {
         if (this.state.name !== '') {
-            socket.emit('create-room', this.state.name);
+            socket.emit('create-room', this.state.name, this.socket.id);
             this.props.history.push('/game')
         } else {
             this.setState({errMessage: 'Please fill in name field to create a room'})
@@ -42,7 +42,7 @@ this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10
 
     joinRoom() {
         if (this.state.joinName !== '' && this.state.id !== '') {
-            socket.emit('join-room', this.state.id, this.state.joinName)
+            socket.emit('join-room', this.state.id, this.state.joinName, this.socket.id)
             console.log('props in joinRoom homescreen', this.props)
             this.props.history.push('/game')
         } else {
@@ -71,6 +71,7 @@ this.audio = new Audio('http://www.hipstrumentals.com/wp-content/uploads/2018/10
     }
 
 render() {
+    console.log('socket id', this.socket.id)
     return (
     <div>
         <br/>

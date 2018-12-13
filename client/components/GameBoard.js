@@ -39,9 +39,9 @@ class GameBoard extends React.Component{
     });
 
 
-    this.socket.on('playerAdded', (id) => {
-      console.log('A new player was added!', id)
-    })
+  //   this.socket.on('playerAdded', (id) => {
+  //     console.log('A new player was added!', id)
+  //   })
   }
 
   startGame(event) {
@@ -94,6 +94,7 @@ class GameBoard extends React.Component{
   handleRapperClick(event) {
     console.log('event.target', event.target)
     let socket = this.socket.id
+    console.log('socket in handle rapper click', socket)
       let points = this.props.playerOneScore
       if(event.target.id === this.state.rapperChoice.name) {
         points++

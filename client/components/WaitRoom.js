@@ -3,6 +3,7 @@ import socket from '../socket';
 import GameBoard from './GameBoard'
 import GameOver from './GameOver'
 import {connect} from 'react-redux'
+import io from 'socket.io-client'
 
 class WaitRoom extends React.Component {
 

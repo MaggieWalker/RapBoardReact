@@ -6,7 +6,8 @@ let roomsCreated = 0;
 if (process.env.NODE_ENV !== 'production') require('../../secrets')
 
 class Player {
-  constructor(name, creator) {
+  constructor(name, id, creator) {
+      this.id = id
       this.name = name
       this.creator = creator
       this.score = 0
@@ -23,20 +24,20 @@ module.exports = io => {
 
       console.log(socket.id, ' has made a persistent connection to the server!');
 
-      socket.on('create-room', (name) => {
+      socket.on('create-room', (name, id) => {
         roomsCreated++;
         const newRoom = `room-${roomsCreated}`;
-        const player = new Player(name, true)
+        const player = new Player(name, id, true)
         console.log('player', player)
         socket.join(newRoom);
         socket.emit('joined-room', {room: newRoom, playerOne: player})
       });
 
-      socket.on('join-room', (id, name) => {
-        const player = new Player(name, false)
-        socket.join(id);
-        socket.broadcast.to(id).emit('new-player', player)
-        socket.emit('joined-room', {room: id, playerTwo: player})
+      socket.on('join-room', (roomid, name, id) => {
+        const player = new Player(name, id, false)
+        socket.join(roomid);
+        socket.broadcast.to(roomid).emit('new-player', player)
+        socket.emit('joined-room', {room: roomid, playerTwo: player})
       })
 
       socket.on('startGame', (room, allPlayers, rounds, playerOne, playerTwo) => {
