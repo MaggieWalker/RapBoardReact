@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import store, {getAllPlayers, updateScore, gotPlayer, gotPlayerOne, gotPlayerTwo, gotRoom, gotGameState, gotNextPlayer, gotNewPlayer, gotGuess, gotCorrectGuess, gotScores} from './store'
+import store, {getAllPlayers, updatePlayerOneScore, updatePlayerTwoScore, gotPlayer, gotPlayerOne, gotPlayerTwo, gotRoom, gotGameState, gotNextPlayer, gotNewPlayer, gotGuess, gotCorrectGuess, gotScores} from './store'
 
 const socket = io(window.location.origin);
 
@@ -46,9 +46,13 @@ socket.on('guessCorrect', (guess) => {
 
 socket.on('emitScore', (score) => {
   console.log('An score from server has been received!', score)
-  store.dispatch(updateScore(score))
+  store.dispatch(updatePlayerOneScore(score))
 })
 
+socket.on('emitTwoScore', (score) => {
+  console.log('An score from server has been received!', score)
+  store.dispatch(updatePlayerTwoScore(score))
+})
 
 
 export default socket

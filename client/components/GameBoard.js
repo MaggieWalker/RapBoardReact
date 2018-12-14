@@ -6,8 +6,8 @@ import io from 'socket.io-client'
 import {connect} from 'react-redux'
 
 class GameBoard extends React.Component{
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.SFW = SFW
     this.NSFW = NSFW
     this.incorrectChoice = incorrectChoice
@@ -27,17 +27,17 @@ class GameBoard extends React.Component{
         audioPlay: false,
         addedPlayer: '',
       }
-      this.socket = io(window.location.origin)
+      this.socket = this.props.socket
   }
 
   componentDidMount(){
     console.log('all players in did mount', this.props.allPlayers)
+    console.log('props in gameboard', this.props)
     this.displayedRappers = this.chooseRappers()
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
 
     });
-
 
   //   this.socket.on('playerAdded', (id) => {
   //     console.log('A new player was added!', id)
@@ -47,7 +47,6 @@ class GameBoard extends React.Component{
   startGame(event) {
     event.preventDefault()
     console.log('joining')
-    console.log('socket', this.socket.id)
   }
 
   chooseRappers() {
@@ -92,13 +91,13 @@ class GameBoard extends React.Component{
   }
 
   handleRapperClick(event) {
-    console.log('event.target', event.target)
-    let socket = this.socket.id
-    console.log('socket in handle rapper click', socket)
+    console.log('socket in handle rapper click', this.socket)
+    console.log('props', this.props)
+    if (this.socket.id === this.props.allPlayers[0].id) {
       let points = this.props.playerOneScore
       if(event.target.id === this.state.rapperChoice.name) {
         points++
-        console.log('point sin handle click', points)
+        console.log('player one', points)
         this.socket.emit('sendScore', points)
         this.correctGuess()
       } else {
@@ -106,6 +105,20 @@ class GameBoard extends React.Component{
           correct: false
         })
       }
+    } else {
+      let points = this.props.playerTwoScore
+      if(event.target.id === this.state.rapperChoice.name) {
+        points++
+        console.log('player two points', points)
+        this.socket.emit('sendTwoScore', points)
+        this.correctGuess()
+      } else {
+        this.setState({
+          correct: false
+        })
+      }
+    }
+
   }
   
 correctGuess(){
@@ -133,6 +146,7 @@ correctGuess(){
   }
 
   render() {
+    console.log('socket in gameboard', this.socket.id)
     return (
     <div>
       <div>
@@ -145,7 +159,7 @@ correctGuess(){
             <h2>{this.props.allPlayers[0].name}'s Score: {this.props.playerOneScore}</h2>
         </div>
         <div>
-            <h2>{this.props.allPlayers[1].name}'s Score: {this.props.allPlayers[1].score}</h2>
+            <h2>{this.props.allPlayers[1].name}'s Score: {this.props.playerTwoScore}</h2>
         </div>
          </div>
       </div>

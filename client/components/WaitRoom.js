@@ -7,8 +7,8 @@ import io from 'socket.io-client'
 
 class WaitRoom extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             rounds: 1,
             errMessage: ''
@@ -18,6 +18,7 @@ class WaitRoom extends React.Component {
 
     startGame() {
         socket.emit('startGame', this.props.room, this.props.allPlayers, this.state.rounds, this.props.playerOne, this.props.playerTwo)
+        console.log(this.socket)
     }
 
     render() {
@@ -25,9 +26,9 @@ class WaitRoom extends React.Component {
         return (
             <div>
                 {this.props.gameState === 'playing' ?
-                    <GameBoard /> :
+                    <GameBoard socket={this.props.socket}/> :
                     this.props.gameState === 'gameOver' ?
-                    <GameOver /> :
+                    <GameOver socket={this.props.socket}/> :
                     <div>
                         {this.props.allPlayers[0] && this.props.allPlayers[1] ?
                             <div>
@@ -38,8 +39,6 @@ class WaitRoom extends React.Component {
                                 <hr />
                                 {this.props.allPlayers.map((player, i) => <p key={i}>{player.name} has joined the room!</p>)}
                                 <hr />
-                                {/* <label>Rounds:</label>
-                                <input type="text" name="rounds" value={this.state.rounds} onChange={this.handleChange} /> */}
                                 <br />
                                 <button type="button" onClick={this.startGame}>All Players are Here!</button>
                                 {this.state.errMessage && <p id="errMessage">{this.state.errMessage}</p>}

@@ -34,7 +34,8 @@ const GOT_GUESS = 'GOT_GUESS'
 const GOT_CARD = 'GOT_CARD'
 const GOT_CORRECT_GUESS = 'GOT_CORRECT_GUESS'
 const GOT_SCORES = 'GOT_SCORES'
-const UPDATE_SCORE = 'UPDATE_SCORE'
+const UPDATE_PLAYER_ONE_SCORE = 'UPDATE_PLAYER_ONE_SCORE'
+const UPDATE_PLAYER_TWO_SCORE = 'UPDATE_PLAYER_TWO_SCORE'
 const GET_ALL_PLAYERS = 'GET_ALL_PLAYERS'
 
 //action creators
@@ -47,7 +48,8 @@ export const gotGuess = (guess) => ({type: GOT_GUESS, guess})
 export const gotCard = (card) => ({type: GOT_CARD, card})
 export const gotCorrectGuess = (guess) => ({type: GOT_CORRECT_GUESS, guess})
 export const gotScores = (players) => ({type: GOT_SCORES, players})
-export const updateScore = (score) => ({type: UPDATE_SCORE, score})
+export const updatePlayerOneScore = (score) => ({type: UPDATE_PLAYER_ONE_SCORE, score})
+export const updatePlayerTwoScore = (score) => ({type: UPDATE_PLAYER_TWO_SCORE, score})
 export const getAllPlayers = (allPlayers) => ({type: GET_ALL_PLAYERS, allPlayers})
 
 // thunk creators
@@ -81,8 +83,10 @@ const reducer = (state = initialState, action) => {
             return {...state, correctGuess: true, guessInfo: action.guess}
         case GOT_SCORES:
             return {...state, allPlayers: action.players}
-        case UPDATE_SCORE:
+        case UPDATE_PLAYER_ONE_SCORE:
             return {...state, playerOneScore: action.score}
+        case UPDATE_PLAYER_TWO_SCORE:
+            return {...state, playerTwoScore: action.score}
         case GET_ALL_PLAYERS:
             return {...state, allPlayers: action.allPlayers}
         default:

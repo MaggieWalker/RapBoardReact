@@ -87,6 +87,10 @@ module.exports = io => {
           console.log('server is seeing this socket event', score)
           socket.broadcast.emit('emitScore', score)
         })
+      socket.on('sendTwoScore', (score) => {
+        console.log('server is seeing sendTwo', score)
+        socket.broadcast.emit('emitTwoScore', score)
+      })
     });
 }
 
