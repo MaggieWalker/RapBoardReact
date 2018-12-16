@@ -38,10 +38,9 @@ class GameBoard extends React.Component{
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
 
     });
-
-  //   this.socket.on('playerAdded', (id) => {
-  //     console.log('A new player was added!', id)
-  //   })
+    if (this.audioChoice){
+      this.handlePlayClick()
+    }
   }
 
   startGame(event) {
@@ -99,7 +98,7 @@ class GameBoard extends React.Component{
         points++
         console.log('player one', points)
         this.socket.emit('sendScore', points)
-        this.correctGuess()
+        this.correctGuess(points)
       } else {
         this.setState({
           correct: false
@@ -111,27 +110,29 @@ class GameBoard extends React.Component{
         points++
         console.log('player two points', points)
         this.socket.emit('sendTwoScore', points)
-        this.correctGuess()
+        this.correctGuess(points)
       } else {
         this.setState({
           correct: false
         })
       }
     }
-
   }
   
-correctGuess(){
-  let socket = this.socket.id
+correctGuess(points){
     this.setState({
       correct: true
     })
-    let score = this.props.playerOneScore + 1
-    console.log('score in correct guss', score)
+    let score = points
+    console.log('score in correct guess', score)
     if (score % 5 === 0 && score !==0) {
       const airHorn = new Audio("https://www.myinstants.com/media/sounds/mlg-airhorn.mp3")
       airHorn.play()
-    } 
+    } else if (score === 21) {
+      const twentyOne = new Audio("http://www.therapboard.com/audio/21savage_21.ogg")
+      twentyOne.play()
+    }
+    // this.audioChoice = null;
   }
 
   handlePlayAgain() {
@@ -147,8 +148,13 @@ correctGuess(){
 
   render() {
     console.log('socket in gameboard', this.socket.id)
+    console.log('audio choice', this.audioChoice)
+    
     return (
     <div>
+      {/* {
+        this.audioChoice ? this.handlePlayClick() : <div />
+      } */}
       <div>
         <div id='navbar'>
          <Navbar />
@@ -176,6 +182,7 @@ correctGuess(){
         ))
       }
       {this.chooseAudio()}
+      {this.handlePlayClick()}
 </div>
 <div id='bottombar'>
   <div id="toggle">
@@ -188,7 +195,7 @@ correctGuess(){
     </div>
   </div>
   <div id='playButton'>
-      <button type='button'onClick={this.handlePlayClick}>Play Ad Lib!</button>
+      <button type='button'onClick={this.handlePlayClick}>Play Ad Lib Again</button>
   </div>
   <button type ='button' onClick={this.onSoundClick}>🔊</button>
   
@@ -202,9 +209,7 @@ correctGuess(){
           <div id='makeChoice'>
             <div id='correctScreen'>
               <CorrectScreen rapper={this.state.rapperChoice}/> 
-              {
-                setTimeout(this.handlePlayAgain, 1500)
-              }
+                <button type='button' onClick={this.handlePlayAgain}>Next</button>
             </div>
           </div>
       : 
