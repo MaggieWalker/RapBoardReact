@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from './navbar'
 import CorrectScreen from './CorrectScreen'
+import PlaySong from './PlaySong'
+import Rappers from './Rappers'
 import {NSFW, SFW, incorrectChoice, colors} from '../rappers'
 import io from 'socket.io-client'
 import {connect} from 'react-redux'
@@ -26,6 +28,7 @@ class GameBoard extends React.Component{
         gameInfo: {},
         audioPlay: false,
         addedPlayer: '',
+        initialPlay: false,
       }
       this.socket = this.props.socket
   }
@@ -132,7 +135,6 @@ correctGuess(points){
       const twentyOne = new Audio("http://www.therapboard.com/audio/21savage_21.ogg")
       twentyOne.play()
     }
-    // this.audioChoice = null;
   }
 
   handlePlayAgain() {
@@ -151,78 +153,85 @@ correctGuess(points){
     console.log('audio choice', this.audioChoice)
     
     return (
-    <div>
-      {/* {
-        this.audioChoice ? this.handlePlayClick() : <div />
-      } */}
       <div>
-        <div id='navbar'>
-         <Navbar />
-        
-        </div>
-         <div id='scores'>
+
         <div>
-            <h2>{this.props.allPlayers[0].name}'s Score: {this.props.playerOneScore}</h2>
-        </div>
-        <div>
-            <h2>{this.props.allPlayers[1].name}'s Score: {this.props.playerTwoScore}</h2>
-        </div>
-         </div>
-      </div>
-<div id='rappers'>
-      {
-        this.displayedRappers.map(rapper => (
-          <div key={rapper.name}>
-          <img className='microphone' src='/microphone.png' />
-          <figure > 
-            <img id= {rapper.name} src={rapper.img ? rapper.img : 'http://therapboard.com/images/artist/21savage.png'} onClick={this.handleRapperClick}/>
-            <figcaption><h4>{rapper.artist}</h4></figcaption>
-            </figure>
-        </div>
-        ))
-      }
-      {this.chooseAudio()}
-      {this.handlePlayClick()}
-</div>
-<div id='bottombar'>
-  <div id="toggle">
-          <h4>SFW : NSFW</h4>
-      <div>
-        <label className="switch">
-            <input type="checkbox" id="togBtn" onChange={(e)=> this.setState({SFW: !this.state.SFW})}></input>
-            <span className="slider round"></span>
-        </label>
-    </div>
-  </div>
-  <div id='playButton'>
-      <button type='button'onClick={this.handlePlayClick}>Play Ad Lib Again</button>
-  </div>
-  <button type ='button' onClick={this.onSoundClick}>🔊</button>
-  
-  
-  <p/>
-  <p/>
-  <p/>
-  <p/>
-      {
-        this.state.correct ?  
-          <div id='makeChoice'>
-            <div id='correctScreen'>
-              <CorrectScreen rapper={this.state.rapperChoice}/> 
-                <button type='button' onClick={this.handlePlayAgain}>Next</button>
-            </div>
+          <div id='navbar'>
+          <Navbar />
+          {/* <PlaySong /> */}
           </div>
-      : 
-      <div/>
-      }
-      {
-        this.state.correct === false ? 
-        <h1>{this.incorrectChoice[Math.floor(Math.random() * this.incorrectChoice.length)]}</h1>
-      :
-      <div/>      
-      }
+          <div id='scores'>
+            <div>
+                <h2>{this.props.allPlayers[0].name}'s Score: {this.props.playerOneScore}</h2>
+            </div>
+            <div>
+                <h2>{this.props.allPlayers[1].name}'s Score: {this.props.playerTwoScore}</h2>
+          </div>
+        </div>
       </div>
-  </div>
+
+    {/* <Rappers displayedRappers ={this.displayedRappers} rapperChoice={this.state.rapperChoice} /> */}
+      
+      <div id='rappers'>
+        {
+              this.displayedRappers.map(rapper => (
+                <div key={rapper.name}>
+                <img className='microphone' src='/microphone.png' />
+                <figure > 
+                  <img id= {rapper.name} src={rapper.img ? rapper.img : 'http://therapboard.com/images/artist/21savage.png'} onClick={this.handleRapperClick}/>
+                  <figcaption><h4>{rapper.artist}</h4></figcaption>
+                  </figure>
+              </div>
+              ))
+            }
+            {this.chooseAudio()}
+            {this.handlePlayClick()}
+      </div>
+      <div id='bottombar'>
+        <div id="toggle">
+                <h4>SFW : NSFW</h4>
+            <div>
+              <label className="switch">
+                  <input type="checkbox" id="togBtn" onChange={(e)=> this.setState({SFW: !this.state.SFW})}></input>
+                  <span className="slider round"></span>
+              </label>
+          </div>
+        </div>
+
+
+        <div id='playButton'>
+          <button type='button'onClick={this.handlePlayClick}>Play Ad Lib Again</button>
+        </div>
+
+
+
+    <button type ='button' onClick={this.onSoundClick}>🔊</button>
+
+    <p/>
+    <p/>
+    <p/>
+    <p/>
+
+        {
+          this.state.correct ?  
+            <div id='makeChoice'>
+              <div id='correctScreen'>
+                <CorrectScreen rapper={this.state.rapperChoice}/> 
+                  <button type='button' onClick={this.handlePlayAgain}>Next</button>
+              </div>
+            </div>
+        : 
+        <div/>
+        }
+        {
+          this.state.correct === false ? 
+          <h1>{this.incorrectChoice[Math.floor(Math.random() * this.incorrectChoice.length)]}</h1>
+        :
+        <div/>      
+        }
+      </div>
+
+    </div>
     )
   }
 }
