@@ -6,6 +6,8 @@ import Routes from './routes'
 import HomeScreen from './components/HomeScreen'
 import JoinScreen from './components/JoinScreen';
 import CreateScreen from './components/CreateScreen';
+import SinglePlayer from './components/SinglePlayer';
+import WinScreen from './components/WinScreen';
 
 const App = () => {
   return (
@@ -14,6 +16,8 @@ const App = () => {
       <Route exact path='/join' component={JoinScreen}/>
       <Route exact path ='/create' component={CreateScreen}/>
       <Route exact path ='/game' component={WaitRoom}/>
+      <Route exact path = '/singleplayer' component={SinglePlayer}/>
+      <Route exact path ='/winner' component={WinScreen} />
     </div>
   )
 }

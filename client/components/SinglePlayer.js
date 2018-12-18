@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from './navbar';
 import CorrectScreen from './CorrectScreen';
-import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
 import history from '../history'
+import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
 import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
 
-class GameBoard extends React.Component {
+class SinglePlayer extends React.Component {
   constructor(props) {
     super(props);
     this.SFW = SFW;
@@ -26,15 +26,12 @@ class GameBoard extends React.Component {
       correct: null,
       rapperChoice: {},
       audioPlay: false,
-      addedPlayer: '',
-      initialPlay: false,
+      points: 0,
     };
     this.socket = this.props.socket;
   }
 
   componentDidMount() {
-    console.log('all players in did mount', this.props.allPlayers);
-    console.log('props in gameboard', this.props);
     this.displayedRappers = this.chooseRappers();
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
@@ -82,7 +79,6 @@ class GameBoard extends React.Component {
         audioPlay: false,
       });
     }
-    console.log(this.state);
   }
 
   chooseAudio() {
@@ -90,41 +86,23 @@ class GameBoard extends React.Component {
   }
 
   handleRapperClick(event) {
-    console.log('socket in handle rapper click', this.socket);
-    console.log('props', this.props);
-    if (this.socket.id === this.props.allPlayers[0].id) {
-      let points = this.props.playerOneScore;
-      if (event.target.id === this.state.rapperChoice.name) {
-        points++;
-        console.log('player one', points);
-        this.socket.emit('sendScore', points);
-        this.correctGuess(points);
-      } else {
-        this.setState({
-          correct: false,
-        });
-      }
+    let points = this.state.points;
+    if (event.target.id === this.state.rapperChoice.name) {
+      points++;
+      this.correctGuess(points);
     } else {
-      let points = this.props.playerTwoScore;
-      if (event.target.id === this.state.rapperChoice.name) {
-        points++;
-        console.log('player two points', points);
-        this.socket.emit('sendTwoScore', points);
-        this.correctGuess(points);
-      } else {
-        this.setState({
-          correct: false,
-        });
-      }
+      this.setState({
+        correct: false,
+      });
     }
   }
 
-  correctGuess(points) {
+  correctGuess(score) {
     this.setState({
       correct: true,
+      points: score,
     });
-    let score = points;
-    console.log('score in correct guess', score);
+
     if (score % 5 === 0 && score !== 0) {
       const airHorn = new Audio(
         'https://www.myinstants.com/media/sounds/mlg-airhorn.mp3'
@@ -147,17 +125,12 @@ class GameBoard extends React.Component {
     });
     document.body.style.background =
       colors[Math.floor(Math.random() * colors.length)];
-    console.log('displayed rappers', this.displayedRappers);
   }
 
   render() {
-    console.log('socket in gameboard', this.socket.id);
-    console.log('audio choice', this.audioChoice);
-
     return (
       <div>
-      {this.props.playerOneScore === 21 ? <WinScreen winner={this.props.allPlayers[0].name}/> :
-        this.props.playerTwoScore === 21 ? <WinScreen winner={this.props.allPlayers[1].name}/> : 
+      {this.state.points === 21 ? history.push('/winner/') :
       <div>
         <div>
           <div id="navbar">
@@ -165,21 +138,10 @@ class GameBoard extends React.Component {
           </div>
           <div id="scores">
             <div>
-              <h2>
-                {this.props.allPlayers[0].name}'s Score:{' '}
-                {this.props.playerOneScore}
-              </h2>
-            </div>
-            <div>
-              <h2>
-                {this.props.allPlayers[1].name}'s Score:{' '}
-                {this.props.playerTwoScore}
-              </h2>
+              <h2>{this.props.allPlayers[0]}'s Score: {this.state.points}</h2>
             </div>
           </div>
         </div>
-
-        {/* <Rappers displayedRappers ={this.displayedRappers} rapperChoice={this.state.rapperChoice} /> */}
 
         <div id="rappers">
           {this.displayedRappers.map(rapper => (
@@ -192,9 +154,9 @@ class GameBoard extends React.Component {
                     rapper.img
                       ? rapper.img
                       : 'http://therapboard.com/images/artist/21savage.png'
-                  }
-                  onClick={this.handleRapperClick}
-                />
+                    }
+                    onClick={this.handleRapperClick}
+                    />
                 <figcaption>
                   <h4>{rapper.artist}</h4>
                 </figcaption>
@@ -244,7 +206,7 @@ class GameBoard extends React.Component {
             </div>
           ) : (
             <div />
-          )}
+            )}
           {this.state.correct === false ? (
             <h1>
               {
@@ -255,25 +217,19 @@ class GameBoard extends React.Component {
             </h1>
           ) : (
             <div />
-          )}
+            )}
         </div>
       </div>
-      }
-    </div>
+    }
+  </div>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    playerOne: state.playerOne,
-    playerTwo: state.playerTwo,
-    playerOneScore: state.playerOneScore,
-    playerTwoScore: state.playerTwoScore,
-    curPlayer: state.curPlayer,
-    correctGuess: state.correctGuess,
-    room: state.room,
     gameState: state.gameState,
     allPlayers: state.allPlayers,
   };
 };
-export default connect(mapStateToProps)(GameBoard);
+
+export default connect(mapStateToProps)(SinglePlayer);

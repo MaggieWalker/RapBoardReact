@@ -356,16 +356,20 @@ export const correctChoice = [
   "Yeaaaaa boyyyy!",
   "YUH",
   "You got it!",
-  "mhm, you know it"
+  "Mhm, you know it",
+  "Skkrrrrt!",
+  "Brraap brraaap!",
+  "If ya know ya know!"
 ]
 
 export const incorrectChoice =[
   "You crazy for this one!",
-  "If you know you know...and you clearly don't",
+  "Ouch...",
   "That's wrong! You mad?",
   "Nahhh",
   "That is...not correct.",
-  "Ha haaaa! No way!"
+  "Ha haaaa! No way!",
+  "Mans not hot..."
 ];
 
 export const colors =['#6D4488',
