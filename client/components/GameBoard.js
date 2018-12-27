@@ -28,6 +28,7 @@ class GameBoard extends React.Component {
       audioPlay: false,
       addedPlayer: '',
       initialPlay: false,
+      answered: false,
     };
     this.socket = this.props.socket;
   }
@@ -90,15 +91,14 @@ class GameBoard extends React.Component {
   }
 
   handleRapperClick(event) {
-    console.log('socket in handle rapper click', this.socket);
-    console.log('props', this.props);
     if (this.socket.id === this.props.allPlayers[0].id) {
       let points = this.props.playerOneScore;
-      if (event.target.id === this.state.rapperChoice.name) {
+      if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
-        console.log('player one', points);
         this.socket.emit('sendScore', points);
         this.correctGuess(points);
+      } else if (event.target.id === this.state.rapperChoice.name && this.state.answered === true){
+        this.correctGuess(points)
       } else {
         this.setState({
           correct: false,
@@ -106,11 +106,12 @@ class GameBoard extends React.Component {
       }
     } else {
       let points = this.props.playerTwoScore;
-      if (event.target.id === this.state.rapperChoice.name) {
+      if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
-        console.log('player two points', points);
         this.socket.emit('sendTwoScore', points);
         this.correctGuess(points);
+      } else if (event.target.id === this.state.rapperChoice.name && this.state.answered === true){
+        this.correctGuess(points)
       } else {
         this.setState({
           correct: false,
@@ -122,6 +123,7 @@ class GameBoard extends React.Component {
   correctGuess(points) {
     this.setState({
       correct: true,
+      answered: true,
     });
     let score = points;
     console.log('score in correct guess', score);
@@ -144,6 +146,7 @@ class GameBoard extends React.Component {
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
       correct: null,
+      answered: false,
     });
     document.body.style.background =
       colors[Math.floor(Math.random() * colors.length)];

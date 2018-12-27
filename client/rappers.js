@@ -174,7 +174,6 @@
     {"name":"wiz1","artist":"Wiz Khalifa","track":"http://www.therapboard.com/audio/wiz_1.ogg","img":"http://therapboard.com/images/artist/wiz.png"},
     {"name":"wiz2","artist":"Wiz Khalifa","track":"http://www.therapboard.com/audio/wiz_unh.ogg","img":"http://therapboard.com/images/artist/wiz.png"},
     {"name":"jeezy1","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_10.ogg","img":"http://therapboard.com/images/artist/jeezy.png"},
-    {"name":"jeezy2","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_11.ogg","img":"http://therapboard.com/images/artist/jeezy.png"},
     {"name":"jeezy3","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_1.ogg","img":"http://therapboard.com/images/artist/jeezy.png"},
     {"name":"quavo","artist":"Quavo","track":"http://www.therapboard.com/audio/quavo_youngnigga.ogg","img":"http://therapboard.com/images/artists/quavo.png"},
     {"name":"takeoff","artist":"Takeoff","track":"http://www.therapboard.com/audio/takeoff_bitch.ogg","img":"http://therapboard.com/images/artists/takeoff.png"},
@@ -347,7 +346,6 @@
   {"name":"wiz1","artist":"Wiz Khalifa","track":"http://www.therapboard.com/audio/wiz_1.ogg","img":"http://therapboard.com/images/artist/wiz.png"},
   {"name":"wiz2","artist":"Wiz Khalifa","track":"http://www.therapboard.com/audio/wiz_unh.ogg","img":"http://therapboard.com/images/artist/wiz.png"},
   {"name":"jeezy1","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_10.ogg","img":"http://therapboard.com/images/artist/jeezy.png"},
-  {"name":"jeezy2","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_11.ogg","img":"http://therapboard.com/images/artist/jeezy.png"},
   {"name":"jeezy3","artist":"Young Jeezy","track":"http://www.therapboard.com/audio/jeezy_1.ogg","img":"http://therapboard.com/images/artist/jeezy.png"}
 ];
 

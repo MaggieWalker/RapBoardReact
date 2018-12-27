@@ -27,6 +27,7 @@ class SinglePlayer extends React.Component {
       rapperChoice: {},
       audioPlay: false,
       points: 0,
+      answered: false,
     };
     this.socket = this.props.socket;
   }
@@ -66,6 +67,7 @@ class SinglePlayer extends React.Component {
 
   handlePlayClick() {
     this.audioChoice.play();
+    console.log(this.audioChoice)
   }
   onSoundClick() {
     if (!this.state.audioPlay) {
@@ -87,9 +89,11 @@ class SinglePlayer extends React.Component {
 
   handleRapperClick(event) {
     let points = this.state.points;
-    if (event.target.id === this.state.rapperChoice.name) {
+    if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
       points++;
       this.correctGuess(points);
+    } else if (event.target.id === this.state.rapperChoice.name && this.state.answered === true){
+      this.correctGuess(points)
     } else {
       this.setState({
         correct: false,
@@ -101,6 +105,7 @@ class SinglePlayer extends React.Component {
     this.setState({
       correct: true,
       points: score,
+      answered: true
     });
 
     if (score % 5 === 0 && score !== 0) {
@@ -122,6 +127,7 @@ class SinglePlayer extends React.Component {
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
       correct: null,
+      answered: false,
     });
     document.body.style.background =
       colors[Math.floor(Math.random() * colors.length)];
@@ -130,7 +136,7 @@ class SinglePlayer extends React.Component {
   render() {
     return (
       <div>
-      {this.state.points === 21 ? history.push('/winner/') :
+      {this.state.points === 21 ? <WinScreen winner={this.props.allPlayers[0]} /> :
       <div>
         <div>
           <div id="navbar">
