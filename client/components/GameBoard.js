@@ -173,6 +173,11 @@ class GameBoard extends React.Component {
                 {this.props.playerOneScore}
               </h2>
             </div>
+            {/* <div>
+              <h3 id='scoreInfo'>
+                First player to 21 <img id='twentyOne' src='http://therapboard.com/images/artist/21savage.png'/> wins!
+              </h3>
+            </div> */}
             <div>
               <h2>
                 {this.props.allPlayers[1].name}'s Score:{' '}

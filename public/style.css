@@ -170,6 +170,20 @@ nav a {
   margin: 1em;
 }
 
+#twentyOne {
+  height: 40px;
+  width: auto;
+}
+
+#scoreInfo {
+  font-style: italic;
+  color: white;
+  /* align-content: center; */
+  /* align-items: center; */
+  display: table-cell; 
+  vertical-align: middle;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
