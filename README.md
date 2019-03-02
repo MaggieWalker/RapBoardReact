@@ -1,9 +1,9 @@
 
 # 🔊 BetweenBars 🔊
-Between bars is a gamified version of www.therapboard.com that tests your knowledge of rap ad-libs!
+BetweenBars is a gamified version of www.therapboard.com that tests your knowledge of rap ad-libs!
 
 ## 💻 Deployed at
- https://rapboard-game.herokuapp.com/
+ https://betweenbars.herokuapp.com/
 
 
  ## 🛠️ Technologies Used

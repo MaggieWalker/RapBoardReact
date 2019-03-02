@@ -91,7 +91,6 @@ class HomeScreen extends React.Component {
 
   render() {
     const socket = this.socket;
-    console.log('socket id', this.socket.id);
     return (
       <div>
         {!this.state.startGame ? (
@@ -99,15 +98,15 @@ class HomeScreen extends React.Component {
             <br />
             <div>
               <div id ="header">
-                <img src='./BetweenBars2.png' />
+                <div id="headerBox">
+                    <div id="github">
+                      <a href="https://github.com/MaggieWalker/RapBoardReact" target="_blank" rel="noopener noreferrer"><img id="githubimg" src="https://image.flaticon.com/icons/png/512/25/25231.png" height="40" width="40"/></a>
+                    </div>
+                    <div id="logo">
+                      <img src='./BetweenBars2.png' />
+                    </div>
+                </div>
               </div>
-              {/* <h1 id="header">🔊🎵 Between Bars 🔊🎵</h1>
-              <div id="subtitle">
-                <h3>
-                  A game to test your rap ad-lib knowledge, using{' '}
-                  <a href="http://therapboard.com/">www.therapboard.com</a>
-                </h3>
-              </div> */}
               <div id="homePics">
                 <img
                   id="pic"

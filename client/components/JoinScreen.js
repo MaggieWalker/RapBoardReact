@@ -18,11 +18,11 @@ render() {
         <form onSubmit={this.handleOnSubmit}>
             <label>
                 Game ID:
-            <input type="text"></input>
+            <input type="text"/>
             </label>
             <label>
                 Join with Name:
-            <input type="text"></input>
+            <input type="text"/>
             </label>
             <input type="submit" value="Submit" />
             </form>

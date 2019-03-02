@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './navbar';
 import CorrectScreen from './CorrectScreen';
-import history from '../history'
 import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
 import { connect } from 'react-redux';
 import WinScreen from './WinScreen';

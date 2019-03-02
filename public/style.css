@@ -23,13 +23,27 @@ a {
 
 #header {
   display: flex;
-  align-content: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   text-align: center;
   font-size: 50px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-style: italic
 }
+#headerBox {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center; */
+}
+
+#github {
+  align-content: right;
+  align-items: right;
+}
+
 #subtitle {
   text-align: center;
 }

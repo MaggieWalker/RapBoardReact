@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from './navbar';
 import CorrectScreen from './CorrectScreen';
 import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
-import history from '../history'
 import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
 
@@ -26,16 +25,12 @@ class GameBoard extends React.Component {
       correct: null,
       rapperChoice: {},
       audioPlay: false,
-      addedPlayer: '',
-      initialPlay: false,
       answered: false,
     };
     this.socket = this.props.socket;
   }
 
   componentDidMount() {
-    console.log('all players in did mount', this.props.allPlayers);
-    console.log('props in gameboard', this.props);
     this.displayedRappers = this.chooseRappers();
     this.setState({
       rapperChoice: this.displayedRappers[Math.floor(Math.random() * 4)],
@@ -64,13 +59,13 @@ class GameBoard extends React.Component {
         }
       }
     }
-    console.log(this.displayedRappers);
     return this.displayedRappers;
   }
 
   handlePlayClick() {
     this.audioChoice.play();
   }
+  
   onSoundClick() {
     if (!this.state.audioPlay) {
       this.audio.play();
@@ -83,7 +78,6 @@ class GameBoard extends React.Component {
         audioPlay: false,
       });
     }
-    console.log(this.state);
   }
 
   chooseAudio() {
@@ -126,7 +120,6 @@ class GameBoard extends React.Component {
       answered: true,
     });
     let score = points;
-    console.log('score in correct guess', score);
     if (score % 5 === 0 && score !== 0) {
       const airHorn = new Audio(
         'https://www.myinstants.com/media/sounds/mlg-airhorn.mp3'
@@ -150,13 +143,9 @@ class GameBoard extends React.Component {
     });
     document.body.style.background =
       colors[Math.floor(Math.random() * colors.length)];
-    console.log('displayed rappers', this.displayedRappers);
   }
 
   render() {
-    console.log('socket in gameboard', this.socket.id);
-    console.log('audio choice', this.audioChoice);
-
     return (
       <div>
       {this.props.playerOneScore === 21 ? <WinScreen winner={this.props.allPlayers[0].name}/> :
@@ -173,11 +162,6 @@ class GameBoard extends React.Component {
                 {this.props.playerOneScore}
               </h2>
             </div>
-            {/* <div>
-              <h3 id='scoreInfo'>
-                First player to 21 <img id='twentyOne' src='http://therapboard.com/images/artist/21savage.png'/> wins!
-              </h3>
-            </div> */}
             <div>
               <h2>
                 {this.props.allPlayers[1].name}'s Score:{' '}
@@ -187,7 +171,6 @@ class GameBoard extends React.Component {
           </div>
         </div>
 
-        {/* <Rappers displayedRappers ={this.displayedRappers} rapperChoice={this.state.rapperChoice} /> */}
 
         <div id="rappers">
           {this.displayedRappers.map(rapper => (
@@ -211,6 +194,7 @@ class GameBoard extends React.Component {
           ))}
           {this.chooseAudio()}
         </div>
+
         <div id="bottombar">
           <div id="toggle">
             <h4>SFW : NSFW</h4>
