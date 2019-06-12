@@ -2,15 +2,10 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
-const session = require('express-session')
-const passport = require('passport')
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
-
-// This is a global Mocha hook, used for resource cleanup.
-// Otherwise, Mocha v4+ never quits after tests.
 
 const createApp = () => {
   // logging middleware
@@ -22,10 +17,6 @@ const createApp = () => {
 
   // compression middleware
   app.use(compression())
-
-  // auth and api routes
-  app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

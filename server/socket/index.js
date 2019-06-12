@@ -19,11 +19,8 @@ class Player {
 }
 
 module.exports = io => {
-
     io.on('connection', socket => {
-
       console.log(socket.id, ' has made a persistent connection to the server!');
-
       socket.on('create-room', (name, id) => {
         roomsCreated++;
         const newRoom = `room-${roomsCreated}`;
