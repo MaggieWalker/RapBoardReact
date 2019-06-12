@@ -6,6 +6,23 @@ import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
 
 class GameBoard extends React.Component {
+  static DisplayedRapper = (rapper) => (
+  <div key={rapper.name}>
+    <img className="microphone" src="/microphone.png" />
+    <figure>
+      <img
+        id={rapper.name}
+        src={
+          rapper.img || 'http://therapboard.com/images/artist/21savage.png'
+        }
+        onClick={this.handleRapperClick}
+      />
+      <figcaption>
+        <h4>{rapper.artist}</h4>
+      </figcaption>
+    </figure>
+  </div>);
+
   constructor(props) {
     super(props);
     this.SFW = SFW;
@@ -16,7 +33,6 @@ class GameBoard extends React.Component {
     this.audio = new Audio(
       'http://www.hipstrumentals.com/wp-content/uploads/2018/10/Sheck-Wes-Mo-Bamba-Instrumental-Prod.-By-Take-A-Daytrip-16yrold.mp3'
     );
-    this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handleRapperClick = this.handleRapperClick.bind(this);
     this.handlePlayAgain = this.handlePlayAgain.bind(this);
     this.onSoundClick = this.onSoundClick.bind(this);
@@ -62,7 +78,7 @@ class GameBoard extends React.Component {
     return this.displayedRappers;
   }
 
-  handlePlayClick() {
+  handlePlayClick = () => {
     this.audioChoice.play();
   }
   
@@ -156,41 +172,29 @@ class GameBoard extends React.Component {
             <Navbar />
           </div>
           <div id="scores">
-            <div>
-              <h2>
-                {this.props.allPlayers[0].name}'s Score:{' '}
-                {this.props.playerOneScore}
+            {
+              [
+                {
+                  name: this.props.allPlayers[0],
+                  score: this.props.playerOneScore,
+                },
+                {
+                  name: this.props.allPlayers[1],
+                  score: this.props.playerTwoScore,
+                },
+              ].map((player) => <div key={player.name}>
+                <h2>
+                {player.name}'s Score:{' '}{player.score}
               </h2>
-            </div>
-            <div>
-              <h2>
-                {this.props.allPlayers[1].name}'s Score:{' '}
-                {this.props.playerTwoScore}
-              </h2>
-            </div>
+              </div>)
+            }
           </div>
         </div>
 
 
         <div id="rappers">
           {this.displayedRappers.map(rapper => (
-            <div key={rapper.name}>
-              <img className="microphone" src="/microphone.png" />
-              <figure>
-                <img
-                  id={rapper.name}
-                  src={
-                    rapper.img
-                      ? rapper.img
-                      : 'http://therapboard.com/images/artist/21savage.png'
-                  }
-                  onClick={this.handleRapperClick}
-                />
-                <figcaption>
-                  <h4>{rapper.artist}</h4>
-                </figcaption>
-              </figure>
-            </div>
+            <GameBoard.DisplayedRapper {...rapper} />
           ))}
           {this.chooseAudio()}
         </div>
