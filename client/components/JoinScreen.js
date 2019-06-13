@@ -8,7 +8,6 @@ this.handleOnSubmit = this.handleOnSubmit.bind(this)
     }
 
 handleOnSubmit() {
-    console.log('joining!')
     history.push('/game')
     }
 
@@ -17,12 +16,10 @@ render() {
         <div>
         <form onSubmit={this.handleOnSubmit}>
             <label>
-                Game ID:
-            <input type="text"/>
+                Game ID: <input type="text"/>
             </label>
             <label>
-                Join with Name:
-            <input type="text"/>
+                Join with Name: <input type="text"/>
             </label>
             <input type="submit" value="Submit" />
             </form>

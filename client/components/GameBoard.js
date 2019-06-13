@@ -4,27 +4,27 @@ import CorrectScreen from './CorrectScreen';
 import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
 import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
+import ScoreBoard from './ScoreBoard';
 
 class GameBoard extends React.Component {
-  static DisplayedRapper = (rapper) => (
-  <div key={rapper.name}>
+  static DisplayedRapper = (props) => (
+  <div key={props.rapper.name}>
     <img className="microphone" src="/microphone.png" />
     <figure>
       <img
-        id={rapper.name}
-        src={
-          rapper.img || 'http://therapboard.com/images/artist/21savage.png'
-        }
-        onClick={this.handleRapperClick}
+        id={props.rapper.name}
+        src={props.rapper.img || 'http://therapboard.com/images/artist/21savage.png'}
+        onClick={props.handleRapperClick}
       />
       <figcaption>
-        <h4>{rapper.artist}</h4>
+        <h4>{props.rapper.artist}</h4>
       </figcaption>
     </figure>
   </div>);
 
   constructor(props) {
     super(props);
+
     this.SFW = SFW;
     this.NSFW = NSFW;
     this.incorrectChoice = incorrectChoice;
@@ -101,8 +101,8 @@ class GameBoard extends React.Component {
   }
 
   handleRapperClick(event) {
-    if (this.socket.id === this.props.allPlayers[0].id) {
-      let points = this.props.playerOneScore;
+    if (this.socket.id === playerOne.id) {
+      let points = playerOneScore;
       if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
         this.socket.emit('sendScore', points);
@@ -115,7 +115,7 @@ class GameBoard extends React.Component {
         });
       }
     } else {
-      let points = this.props.playerTwoScore;
+      let points = playerTwoScore;
       if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
         this.socket.emit('sendTwoScore', points);
@@ -162,25 +162,31 @@ class GameBoard extends React.Component {
   }
 
   render() {
+    let playerOne = this.props.allPlayers[0];
+    let playerTwo = this.props.allPlayers[1];
+    let playerOneScore = this.props.playerOneScore;
+    let playerTwoScore = this.props.playerTwoScore;
+
     return (
       <div>
-      {this.props.playerOneScore === 21 ? <WinScreen winner={this.props.allPlayers[0].name}/> :
-        this.props.playerTwoScore === 21 ? <WinScreen winner={this.props.allPlayers[1].name}/> : 
+      {playerOneScore === 21 ? <WinScreen winner={playerOne.name}/> :
+        playerTwoScore === 21 ? <WinScreen winner={playerTwo.name}/> : 
       <div>
         <div>
           <div id="navbar">
             <Navbar />
           </div>
+        <ScoreBoard {...playerOne} {...playerTwo} {...playerOneScore} {...playerTwoScore}/>
           <div id="scores">
             {
               [
                 {
-                  name: this.props.allPlayers[0],
-                  score: this.props.playerOneScore,
+                  name: playerOne,
+                  score: playerOneScore,
                 },
                 {
-                  name: this.props.allPlayers[1],
-                  score: this.props.playerTwoScore,
+                  name: playerTwo,
+                  score: playerTwoScore,
                 },
               ].map((player) => <div key={player.name}>
                 <h2>
@@ -194,7 +200,7 @@ class GameBoard extends React.Component {
 
         <div id="rappers">
           {this.displayedRappers.map(rapper => (
-            <GameBoard.DisplayedRapper {...rapper} />
+            <GameBoard.DisplayedRapper key={rapper.name} rapper= {rapper} handleRapperClick = {this.handleRapperClick}/>
           ))}
           {this.chooseAudio()}
         </div>

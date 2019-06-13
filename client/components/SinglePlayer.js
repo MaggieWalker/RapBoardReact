@@ -6,6 +6,25 @@ import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
 
 class SinglePlayer extends React.Component {
+  static DisplayedRappers = (props) => (
+  <div key={props.rapper.name}>
+    <img className="microphone" src="/microphone.png" />
+    <figure>
+      <img
+        id={props.rapper.name}
+        src={
+          props.rapper.img
+            || 'http://therapboard.com/images/artist/21savage.png'
+          }
+          onClick={props.handleRapperClick}
+          />
+      <figcaption>
+        <h4>{props.rapper.artist}</h4>
+      </figcaption>
+    </figure>
+  </div>
+  )
+
   constructor(props) {
     super(props);
     this.SFW = SFW;
@@ -60,13 +79,11 @@ class SinglePlayer extends React.Component {
         }
       }
     }
-    console.log(this.displayedRappers);
     return this.displayedRappers;
   }
 
   handlePlayClick() {
     this.audioChoice.play();
-    console.log(this.audioChoice)
   }
   onSoundClick() {
     if (!this.state.audioPlay) {
@@ -150,23 +167,7 @@ class SinglePlayer extends React.Component {
 
         <div id="rappers">
           {this.displayedRappers.map(rapper => (
-            <div key={rapper.name}>
-              <img className="microphone" src="/microphone.png" />
-              <figure>
-                <img
-                  id={rapper.name}
-                  src={
-                    rapper.img
-                      ? rapper.img
-                      : 'http://therapboard.com/images/artist/21savage.png'
-                    }
-                    onClick={this.handleRapperClick}
-                    />
-                <figcaption>
-                  <h4>{rapper.artist}</h4>
-                </figcaption>
-              </figure>
-            </div>
+            <SinglePlayer.DisplayedRappers key ={rapper.name} rapper={rapper} handleRapperClick={this.handleRapperClick}/>
           ))}
           {this.chooseAudio()}
         </div>
@@ -178,7 +179,7 @@ class SinglePlayer extends React.Component {
                 <input
                   type="checkbox"
                   id="togBtn"
-                  onChange={e => this.setState({ SFW: !this.state.SFW })}
+                  onChange={() => this.setState({ SFW: !this.state.SFW })}
                 />
                 <span className="slider round" />
               </label>
