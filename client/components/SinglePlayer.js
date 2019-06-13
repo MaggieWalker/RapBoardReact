@@ -4,6 +4,7 @@ import CorrectScreen from './CorrectScreen';
 import { NSFW, SFW, incorrectChoice, colors } from '../rappers';
 import { connect } from 'react-redux';
 import WinScreen from './WinScreen';
+import ScoreBoard from './ScoreBoard';
 
 class SinglePlayer extends React.Component {
   static DisplayedRappers = (props) => (
@@ -150,6 +151,7 @@ class SinglePlayer extends React.Component {
   }
 
   render() {
+    let players = [{name: this.props.allPlayers[0], score: this.state.points}]
     return (
       <div>
       {this.state.points === 21 ? <WinScreen winner={this.props.allPlayers[0]} /> :
@@ -158,11 +160,7 @@ class SinglePlayer extends React.Component {
           <div id="navbar">
             <Navbar />
           </div>
-          <div id="scores">
-            <div>
-              <h2>{this.props.allPlayers[0]}'s Score: {this.state.points}</h2>
-            </div>
-          </div>
+          <ScoreBoard players = {players}/>
         </div>
 
         <div id="rappers">

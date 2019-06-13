@@ -101,8 +101,8 @@ class GameBoard extends React.Component {
   }
 
   handleRapperClick(event) {
-    if (this.socket.id === playerOne.id) {
-      let points = playerOneScore;
+    if (this.socket.id === this.props.allPlayers[0].id) {
+      let points = this.props.playerOneScore;
       if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
         this.socket.emit('sendScore', points);
@@ -115,7 +115,7 @@ class GameBoard extends React.Component {
         });
       }
     } else {
-      let points = playerTwoScore;
+      let points = this.props.playerTwoScore;
       if (event.target.id === this.state.rapperChoice.name && this.state.answered === false) {
         points++;
         this.socket.emit('sendTwoScore', points);
@@ -162,39 +162,26 @@ class GameBoard extends React.Component {
   }
 
   render() {
-    let playerOne = this.props.allPlayers[0];
-    let playerTwo = this.props.allPlayers[1];
-    let playerOneScore = this.props.playerOneScore;
-    let playerTwoScore = this.props.playerTwoScore;
+    let players = 
+    [
+      {id: this.props.allPlayers[0].id, 
+      name: this.props.allPlayers[0].name, 
+      score: this.props.playerOneScore}, 
+      {id: this.props.allPlayers[1].id,
+      name: this.props.allPlayers[1].name, 
+      score: this.props.playerTwoScore}
+    ];
 
     return (
       <div>
-      {playerOneScore === 21 ? <WinScreen winner={playerOne.name}/> :
-        playerTwoScore === 21 ? <WinScreen winner={playerTwo.name}/> : 
+      {this.props.playerOneScore === 21 ? <WinScreen winner={this.props.allPlayers[0].name}/> :
+        this.props.playerTwoScore === 21 ? <WinScreen winner={this.props.allPlayers[1].name}/> : 
       <div>
         <div>
           <div id="navbar">
             <Navbar />
           </div>
-        <ScoreBoard {...playerOne} {...playerTwo} {...playerOneScore} {...playerTwoScore}/>
-          <div id="scores">
-            {
-              [
-                {
-                  name: playerOne,
-                  score: playerOneScore,
-                },
-                {
-                  name: playerTwo,
-                  score: playerTwoScore,
-                },
-              ].map((player) => <div key={player.name}>
-                <h2>
-                {player.name}'s Score:{' '}{player.score}
-              </h2>
-              </div>)
-            }
-          </div>
+        <ScoreBoard players = {players}/>
         </div>
 
 
