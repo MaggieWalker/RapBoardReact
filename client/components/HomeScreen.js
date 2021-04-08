@@ -124,69 +124,65 @@ class HomeScreen extends React.Component {
             </div>
 
             <div id="welcome">
-              <hr />
-              <div className="welcome">
+              <div className="welcome" id="single-player">
                 <h1>Solo Game</h1>
                 <p>Please enter your name below</p>
-                <label>Name</label>
                 <input
                   name="soloName"
                   value={this.state.soloName}
                   onChange={this.handleChange}
                   type="text"
+                  placeholder="Your name.."
                 />
                 {this.state.errMessageSingle && (
                   <p id="errMessage">{this.state.errMessageSingle}</p>
                 )}
-                <p />
+                <br/>
                 <button type="submit" onClick={this.singlePlayerStart}>
                   Start Game!
                 </button>
               </div>
-              <hr />
-              <div className="welcome">
-                <h1>Two-Player Game</h1>
+              <div className="welcome" id="multi-player-create">
+                <h1>Two Player Game</h1>
                 <p>Please enter your name below</p>
-                <label>Name</label>
                 <input
                   name="name"
                   value={this.state.name}
                   onChange={this.handleChange}
                   type="text"
+                  placeholder="Your name.."
                 />
                 {this.state.errMessage && (
                   <p id="errMessage">{this.state.errMessage}</p>
                 )}
-                <p>If you would like to create a new room, click here!</p>
+                <br/>
                 <button type="submit" onClick={this.createRoom}>
-                  Create A Game Room!
+                  Create a Game Room!
                 </button>
               </div>
-              <hr />
-              <div className="welcome">
-                <h1>Join A Game Room</h1>
+              <div className="welcome" id="multi-player-join">
+                <h1>Join a Game Room</h1>
                 <p>Enter your name and the room ID here!</p>
-                <label>Name</label>
                 <input
                   name="joinName"
                   value={this.state.joinName}
                   onChange={this.handleChange}
                   type="text"
+                  placeholder="Your name.."
                 />{' '}
                 <br />
-                <label>Room ID</label>
                 <input
                   name="id"
                   value={this.state.id}
                   onChange={this.handleChange}
                   type="text"
+                  placeholder="Your room id.."
                 />{' '}
                 <br />
                 <button type="submit" onClick={this.joinRoom}>
-                  Join A Game Room!
+                  Join a Game Room!
                 </button>
               </div>
-              <hr />
             </div>
           </div>
         ) : (

@@ -4,11 +4,9 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background: #558B6E
 }
-
 p {
   font-size: 15px;
 }
-
 a {
   text-decoration: none;
   color: white;
@@ -18,7 +16,6 @@ a {
   flex-direction: row;
   justify-content: center
 }
-
 #header {
   display: flex;
   flex-direction: row;
@@ -29,39 +26,27 @@ a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-style: italic
 }
-#headerBox {
-  /* display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  text-align: center; */
-}
-
 #github {
   align-content: right;
   align-items: right;
 }
-
 #subtitle {
   text-align: center;
 }
-
 #bottombar {
   display: flex;
   flex-direction: row;
   align-items: baseline
 }
-
 .container {
   display: flex;
   padding: 20px;
   justify-content: center;
 }
-
 #pic {
-  height: 250px;
+  height: 200px;
   width: auto;
-  padding: 10px;
+  padding: 20px;
 }
 #homePics {
   display: flex;
@@ -73,12 +58,10 @@ a {
   flex-shrink: 1;
   align-content: space-between;
 }
-
 #img {
   align-content: center;
   align-items: center;
 }
-
 #lilbaby {
   height: 570px;
   width: auto;
@@ -92,7 +75,6 @@ a {
   display: flex;
   justify-content: center;
 }
-
 #rappers {
   display: flex;
   flex-direction: row;
@@ -109,7 +91,23 @@ a {
   text-align: center;
   display: flex;
   flex-direction: row;
-  align-content: space-between
+  align-content: space-between;
+  justify-content: center;
+}
+#single-player {
+  border: 1px solid black;
+  padding: 20px 40px 0px 40px;
+  margin: 10px;
+}
+#multi-player-create {
+  border: 1px solid black;
+  padding: 20px 40px 0px 40px;
+  margin: 10px;
+}
+#multi-player-join {
+  border: 1px solid black;
+  padding: 10px 40px 10px 40px;
+  margin: 10px;
 }
 
 .welcome > label {
@@ -117,11 +115,15 @@ a {
 }
 
 .welcome > input {
-  border-style: double;
   width: 200px;
   height: 25px;
   font-size: 25px;
   text-align: center;
+  border-style: double;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 12px 20px;
+  margin: 8px 0;
 }
 
 #correctScreen {
