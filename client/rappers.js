@@ -1,4 +1,4 @@
-  export const NSFW =[
+export const NSFW =[
     {"name":"twochainz1","artist":"2 chainz","track":"2chainz_yeah2.ogg","img":"2chainz.png"},
     {"name":"twochainz2","artist":"2 chainz","track":"2chainz_4.ogg","img":"2chainz.png"},
     {"name":"twochainz3","artist":"2 chainz","track":"2chainz_tellem.ogg","img":"2chainz.png"},
@@ -355,19 +355,15 @@ export const correctChoice = [
   "YUH",
   "You got it!",
   "Mhm, you know it",
-  "Skkrrrrt!",
-  "Brraap brraaap!",
-  "If ya know ya know!"
+  "If you know you know!"
 ]
 
 export const incorrectChoice =[
-  "You crazy for this one!",
   "Ouch...",
-  "That's wrong! You mad?",
-  "Nahhh",
+  "That's wrong!",
+  "Nope",
   "That is...not correct.",
-  "Ha haaaa! No way!",
-  "Mans not hot..."
+  "Ha haaaa! No way!"
 ];
 
 export const colors =['#6D4488',
@@ -386,4 +382,4 @@ export const correctSounds =[
   new Audio('yogotti_yeah.ogg')
 ]
   
-  export default NSFW
+export default NSFW
