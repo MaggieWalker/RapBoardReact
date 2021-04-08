@@ -13,7 +13,9 @@ class GameBoard extends React.Component {
     <figure>
       <img
         id={props.rapper.name}
-        src={props.rapper.img || 'http://therapboard.com/images/artist/21savage.png'}
+        src={
+          `./rapper_images/${props.rapper.img}`
+          }
         onClick={props.handleRapperClick}
       />
       <figcaption>

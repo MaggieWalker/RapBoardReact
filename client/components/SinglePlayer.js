@@ -14,8 +14,7 @@ class SinglePlayer extends React.Component {
       <img
         id={props.rapper.name}
         src={
-          props.rapper.img
-            || 'http://therapboard.com/images/artist/21savage.png'
+          `./rapper_images/${props.rapper.img}`
           }
           onClick={props.handleRapperClick}
           />
