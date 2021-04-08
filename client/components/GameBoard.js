@@ -99,7 +99,7 @@ class GameBoard extends React.Component {
   }
 
   chooseAudio() {
-    this.audioChoice = new Audio(this.state.rapperChoice.track);
+    this.audioChoice = new Audio(`./rapper_audio/${this.state.rapperChoice.track}`)
   }
 
   handleRapperClick(event) {
